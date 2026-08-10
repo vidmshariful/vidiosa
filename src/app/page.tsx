@@ -1,69 +1,116 @@
 import Image from "next/image";
 
+import { ColorBars } from "@/components/color-bars";
+import { Timeline } from "@/components/timeline";
+
+const SERVICES = ["Animated explainers", "Product demos", "Launch films"];
+
+function Brackets() {
+  const corner =
+    "pointer-events-none absolute h-7 w-7 border-paper/18 sm:h-9 sm:w-9";
+  return (
+    <div aria-hidden>
+      <span
+        className={`${corner} -top-6 -left-4 border-t border-l sm:-left-8`}
+      />
+      <span
+        className={`${corner} -top-6 -right-4 border-t border-r sm:-right-8`}
+      />
+      <span
+        className={`${corner} -bottom-6 -left-4 border-b border-l sm:-left-8`}
+      />
+      <span
+        className={`${corner} -right-4 -bottom-6 border-r border-b sm:-right-8`}
+      />
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <>
+      <ColorBars />
+
+      <div className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col px-6 py-8 sm:px-10 sm:py-10 lg:px-14">
+        <header className="flex items-center justify-between gap-6">
+          {/* Source art carries ~25% padding top and bottom, so the box is
+              sized larger than the mark reads. */}
+          <Image
+            src="/vidiosa-logo.png"
+            alt="Vidiosa"
+            width={300}
+            height={100}
+            priority
+            className="h-11 w-auto sm:h-14"
+          />
+          <p className="label text-muted">SaaS video studio</p>
+        </header>
+
+        {/* Vertical rhythm keys off viewport height so the frame fits a laptop
+            screen without scrolling, and breathes on taller displays. */}
+        <main className="flex flex-1 flex-col justify-center py-[clamp(3.5rem,7vh,6rem)]">
+          <section className="relative w-full">
+            <Brackets />
+
+            <div className="max-w-[54rem]">
+              {/* The status is the point of the page, so it gets a chip and a
+                  readable size rather than fine print. */}
+              <p className="label inline-flex items-center gap-3 border border-flare/35 bg-flare/10 px-4 py-2.5 text-[0.8125rem] text-flare sm:text-sm">
+                <span aria-hidden className="block h-2 w-2 bg-flare" />
+                Coming soon
+              </p>
+
+              <h1 className="display mt-6 text-[clamp(2.5rem,6.8vw,5.25rem)] text-paper">
+                SaaS videos that educate, engage, and convert.
+              </h1>
+
+              <p className="mt-7 max-w-[46ch] text-base leading-relaxed text-paper/70 sm:text-lg">
+                Vidiosa cuts animated explainers, product demos, and launch
+                films for SaaS teams. The new site is in the edit. The studio is
+                open — bring us a brief.
+              </p>
+
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <a
+                  href="mailto:hello@vidiosa.com?subject=Project%20brief"
+                  className="label inline-flex items-center justify-center bg-flare px-7 py-4 text-ink transition-colors hover:bg-flare-lift"
+                >
+                  Start a project
+                </a>
+                <a
+                  href="tel:+13072257167"
+                  className="label inline-flex items-center justify-center border border-line px-7 py-4 text-paper/80 transition-colors hover:border-paper/35 hover:text-paper"
+                >
+                  +1 307 225 7167
+                </a>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <Timeline />
+
+        <footer className="mt-[clamp(2rem,4.5vh,3.5rem)] flex flex-col gap-5 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <ul className="label flex flex-wrap items-center gap-x-3 gap-y-2 text-muted">
+            {SERVICES.map((service, i) => (
+              <li key={service} className="flex items-center gap-3">
+                {i > 0 && <span aria-hidden className="h-3 w-px bg-line" />}
+                {service}
+              </li>
+            ))}
+          </ul>
+          <div className="label flex flex-wrap items-center gap-x-3 gap-y-2 text-muted">
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="mailto:hello@vidiosa.com"
+              className="text-paper/75 transition-colors hover:text-flare"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+              hello@vidiosa.com
+            </a>
+            <span aria-hidden className="h-3 w-px bg-line" />
+            <span>&copy; {new Date().getFullYear()} Vidiosa</span>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }
