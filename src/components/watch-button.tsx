@@ -8,6 +8,7 @@ export function WatchButton() {
     <button
       type="button"
       className="btn btn-line"
+      data-magnetic
       onClick={() => window.dispatchEvent(new Event(PLAY_REEL_EVENT))}
       aria-label="Watch the showreel"
     >

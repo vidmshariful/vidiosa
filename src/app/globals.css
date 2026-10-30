@@ -56,9 +56,37 @@ body {
 
 .grad-text {
   background: var(--grad);
+  /* Wider than the text so --gx (set from the cursor) can slide the colours. */
+  background-size: 200% 100%;
+  background-position: var(--gx, 50%) 50%;
+  transition: background-position 0.9s var(--ease-out);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* A gradient that flows through the letters on a loop. The colours repeat end
+   to start so the 200% shift lands on the same frame it began on. */
+.grad-flow {
+  background-image: linear-gradient(
+    90deg,
+    #ff9a4d 0%,
+    #ff5a1f 25%,
+    #f23d0f 50%,
+    #ff5a1f 75%,
+    #ff9a4d 100%
+  );
+  background-size: 200% 100%;
+  animation: grad-flow 6s linear infinite;
+}
+
+@keyframes grad-flow {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 200% 50%;
+  }
 }
 
 .tag {
@@ -169,6 +197,13 @@ button:hover .roll::after {
   background: var(--color-mist);
 }
 
+[data-magnetic] {
+  transition:
+    transform 0.5s var(--ease-out),
+    background-color 0.3s var(--ease-out),
+    border-color 0.3s;
+}
+
 .btn-sm {
   min-height: 48px;
   font-size: 15px;
@@ -185,9 +220,36 @@ button:hover .roll::after {
   position: sticky;
   top: 0;
   z-index: 50;
+  transition: transform 0.5s var(--ease);
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+}
+
+.hdr.is-hidden {
+  transform: translateY(-100%);
+}
+
+.logo {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 5px;
+}
+
+.logo img {
+  width: auto;
+  height: 30px;
+}
+
+.logo-mark {
+  /* The triangle's visual centre sits left of the image centre. */
+  transform-origin: 44% 50%;
+  transition: transform 0.9s var(--ease);
+}
+
+.logo:hover .logo-mark {
+  transform: rotate(360deg);
 }
 
 .wa {
@@ -213,6 +275,18 @@ button:hover .roll::after {
 }
 
 /* Hero */
+.hero-field {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Fade the grid out toward the edges so it never reads as graph paper. */
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 60% 40%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse 70% 80% at 60% 40%, #000 30%, transparent 80%);
+}
+
 .h1 {
   font-family: var(--font-head);
   font-weight: 600;
@@ -329,6 +403,7 @@ button:hover .roll::after {
   color: var(--color-ink);
   font-size: 17px;
   font-weight: 500;
+  white-space: nowrap;
   cursor: pointer;
   transform: translate(-50%, -50%);
   transition: transform 0.5s var(--ease);
@@ -402,27 +477,78 @@ button:hover .roll::after {
 /* What we make */
 .marquee {
   overflow: hidden;
-  padding-block: clamp(28px, 3.4vw, 44px);
+  padding-block: clamp(24px, 2.8vw, 36px);
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 40s linear infinite;
+  will-change: transform;
 }
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
+.marquee-item {
+  transition: opacity 0.4s var(--ease-out);
+}
+
+/* Hovering one work type dims the rest. */
+.marquee:has(.marquee-item:hover) .marquee-item:not(:hover) {
+  opacity: 0.22;
+}
+
+/* Hover preview: a small clip that trails the cursor over the strip. */
+.peek {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.peek-card {
+  position: relative;
+  width: clamp(240px, 22vw, 340px);
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--color-ink);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  /* Floats above the cursor so the hovered word stays readable. */
+  transform: translate(-50%, calc(-100% - 28px)) scale(0.6) rotate(-4deg);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.35s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+.peek[data-on] .peek-card {
+  opacity: 1;
+  transform: translate(-50%, calc(-100% - 28px)) scale(1) rotate(-2deg);
+}
+
+.peek-card video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.peek-card video[data-on] {
+  opacity: 1;
 }
 
 .marquee-set {
   display: flex;
   align-items: center;
-  gap: 36px;
-  padding-right: 36px;
+  /* Spacing scales with the type so the rhythm holds at every size. */
+  gap: 0.7em;
+  padding-right: 0.7em;
   font-family: var(--font-head);
   font-weight: 600;
-  font-size: clamp(32px, 4vw, 58px);
+  font-size: clamp(24px, 2.8vw, 40px);
   letter-spacing: -0.045em;
   line-height: 1.1;
   white-space: nowrap;
@@ -434,10 +560,136 @@ button:hover .roll::after {
   flex: none;
 }
 
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
+
+@supports (animation-timeline: view()) {
+  .stage.fade-in {
+    /* Narrowest: lined up with the text column above, and never less than 6vw a side. */
+    --stage-inset: max(
+      calc((100vw - min(1376px, 100vw)) / 2 + var(--gutter) - var(--edge)),
+      6vw
+    );
+    animation:
+      fade-up 1s var(--ease-out) 0.45s both,
+      stage-grow linear both;
+    animation-timeline: auto, view();
+    animation-range: normal, cover 0% cover 100%;
   }
+
+  @keyframes stage-grow {
+    0% {
+      clip-path: inset(0 var(--stage-inset) round clamp(24px, 3vw, 40px));
+    }
+    42%,
+    58% {
+      clip-path: inset(0 0 round clamp(24px, 3vw, 40px));
+    }
+    100% {
+      clip-path: inset(0 calc(var(--stage-inset) * 0.6) round clamp(24px, 3vw, 40px));
+    }
+  }
+}
+
+/* Custom cursor (mouse and trackpad only; see cursor.tsx) */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+
+.has-cursor .stage-reel {
+  cursor: auto !important;
+}
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  pointer-events: none;
+  /* Difference keeps the dot visible on white, black and video alike. */
+  mix-blend-mode: difference;
+}
+
+.cursor::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0;
+  transition:
+    width 0.45s var(--ease-out),
+    height 0.45s var(--ease-out),
+    left 0.45s var(--ease-out),
+    top 0.45s var(--ease-out),
+    opacity 0.3s,
+    transform 0.2s;
+}
+
+.cursor.is-on::before {
+  opacity: 1;
+}
+
+.cursor.is-down::before {
+  transform: scale(0.8);
+}
+
+.cursor[data-mode="link"]::before {
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+}
+
+.cursor[data-mode="play"] {
+  mix-blend-mode: normal;
+}
+
+.cursor[data-mode="play"]::before {
+  left: -56px;
+  top: -56px;
+  width: 112px;
+  height: 112px;
+}
+
+.cursor[data-mode="none"]::before {
+  opacity: 0;
+}
+
+.cursor-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-ink);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  transition:
+    opacity 0.3s,
+    transform 0.45s var(--ease-out);
+}
+
+.cursor.is-on[data-mode="play"] .cursor-label {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* The bubble replaces the centre button while the cursor is over the reel. */
+.has-cursor .stage:hover .play-pill:not(:focus-visible) {
+  opacity: 0;
+}
+
+.play-pill {
+  transition:
+    transform 0.5s var(--ease),
+    opacity 0.3s;
 }
 
 /* Footer call to action */
@@ -526,6 +778,18 @@ button:hover .roll::after {
     padding: 0 14px;
   }
 
+  /* Portrait frame for the silent preview; once the reel plays, the frame
+     takes the video's shape so it fills the width with no black bars. */
+  .stage {
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: 72svh;
+  }
+
+  .stage.is-playing {
+    aspect-ratio: 16 / 9;
+  }
+
   .play-pill {
     font-size: 15px;
     padding-right: 22px;
@@ -534,6 +798,50 @@ button:hover .roll::after {
   .play-pill-dot {
     width: 48px;
     height: 48px;
+  }
+}
+
+/* Phones: a compact header and full-width hero buttons. */
+@media (max-width: 640px) {
+  .logo img {
+    height: 26px;
+  }
+
+  .wa {
+    min-height: 44px;
+    padding: 0 12px;
+  }
+
+  .hdr .btn-sm {
+    min-height: 44px;
+    gap: 10px;
+    padding: 5px 5px 5px 16px;
+    font-size: 14px;
+  }
+
+  .hdr .btn-sm .btn-dot {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero-ctas {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-ctas .btn {
+    justify-content: space-between;
+  }
+
+  .hero-ctas .btn-line {
+    justify-content: flex-start;
+  }
+}
+
+/* The smallest phones keep the mark and drop the wordmark so nothing overlaps. */
+@media (max-width: 349px) {
+  .logo-word {
+    display: none;
   }
 }
 

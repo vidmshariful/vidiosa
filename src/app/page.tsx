@@ -1,57 +1,44 @@
 import Image from "next/image";
 
 import { BookingCalendar } from "@/components/booking-calendar";
+import { Cursor } from "@/components/cursor";
 import { DotWordmark } from "@/components/dot-wordmark";
+import { HeroField } from "@/components/hero-field";
 import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
+import { Marquee } from "@/components/marquee";
 import { Showreel } from "@/components/showreel";
+import { SiteMotion } from "@/components/site-motion";
 import { WatchButton } from "@/components/watch-button";
 import { BOOK_CALL_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/contact";
-
-const MAKES = [
-  "Launch films",
-  "Product demos",
-  "Explainers",
-  "Founder clips",
-  "Onboarding videos",
-];
-
-function MarqueeSet({ hidden = false }: { hidden?: boolean }) {
-  return (
-    <div className="marquee-set" aria-hidden={hidden || undefined}>
-      {MAKES.map((item) => (
-        <span key={item} className="contents">
-          <span>{item}</span>
-          <Image
-            src="/brand/vidiosa-mark-black.png"
-            alt=""
-            width={109}
-            height={116}
-          />
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export default function Home() {
   return (
     <>
       <header className="hdr">
-        <div className="wrap flex min-h-20 items-center gap-3">
-          <a href="#top" aria-label="Vidiosa home">
-            {/* Source art is 578×120. */}
+        <div className="wrap flex min-h-20 items-center gap-2 sm:gap-3">
+          <a href="#top" className="logo" aria-label="Vidiosa home">
+            {/* Cut from the 578×120 logo: mark 113×120, wordmark 445×120. */}
             <Image
-              src="/brand/vidiosa-logo-black.png"
-              alt="Vidiosa"
-              width={578}
+              src="/brand/vidiosa-mark-gradient.png"
+              alt=""
+              width={113}
               height={120}
               priority
-              className="h-[30px] w-auto"
+              className="logo-mark"
+            />
+            <Image
+              src="/brand/vidiosa-wordmark-black.png"
+              alt="Vidiosa"
+              width={445}
+              height={120}
+              priority
+              className="logo-word"
             />
           </a>
           <a
             href={WHATSAPP_URL}
             className="wa"
+            data-magnetic
             aria-label={`WhatsApp ${WHATSAPP_DISPLAY}`}
           >
             <WhatsAppIcon />
@@ -59,7 +46,7 @@ export default function Home() {
               <span>{WHATSAPP_DISPLAY}</span>
             </span>
           </a>
-          <a href={BOOK_CALL_URL} className="btn btn-ink btn-sm">
+          <a href={BOOK_CALL_URL} className="btn btn-ink btn-sm" data-magnetic>
             <span className="roll" data-t="Book a call">
               <span>Book a call</span>
             </span>
@@ -71,14 +58,18 @@ export default function Home() {
       </header>
 
       <main id="top">
-        <section className="pt-[clamp(40px,6vw,96px)]">
+        <section className="relative isolate pt-[clamp(40px,6vw,96px)]">
+          <HeroField />
           <div className="wrap">
             <h1 className="h1">
               <span className="line">
                 <span>One plan. A full video team.</span>
               </span>
               <span className="line">
-                <span className="grad-text">Videos every week.</span>
+                {/* Inner span: the outer one runs the rise animation. */}
+                <span>
+                  <span className="grad-text grad-flow">Videos every week.</span>
+                </span>
               </span>
             </h1>
 
@@ -89,8 +80,8 @@ export default function Home() {
                 product and founder videos from your roadmap, make them and ship
                 them. No hiring, no salaries, no managing. You just approve.
               </p>
-              <div className="flex flex-wrap gap-2.5 lg:justify-end">
-                <a href={BOOK_CALL_URL} className="btn btn-ink">
+              <div className="hero-ctas flex flex-wrap gap-2.5 lg:justify-end">
+                <a href={BOOK_CALL_URL} className="btn btn-ink" data-magnetic>
                   <span className="roll" data-t="Book a call">
                     <span>Book a call</span>
                   </span>
@@ -106,12 +97,7 @@ export default function Home() {
 
         <Showreel />
 
-        <div className="marquee" aria-label="What we make">
-          <div className="marquee-track">
-            <MarqueeSet />
-            <MarqueeSet hidden />
-          </div>
-        </div>
+        <Marquee />
       </main>
 
       <footer className="end">
@@ -133,6 +119,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <Cursor />
+      <SiteMotion />
     </>
   );
 }

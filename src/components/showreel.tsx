@@ -36,7 +36,12 @@ export function Showreel() {
       ref={sectionRef}
       id="showreel"
       aria-label="Vidiosa showreel"
-      className="stage fade-in"
+      className={`stage fade-in${playing ? " is-playing" : ""}`}
+      // On desktop the whole frame plays the reel; the cursor turns into a Play bubble.
+      data-cursor={playing ? undefined : "play"}
+      onClick={(e) => {
+        if (!playing && !(e.target as Element).closest("a")) setPlaying(true);
+      }}
     >
       <video
         ref={previewRef}
@@ -53,6 +58,7 @@ export function Showreel() {
       {playing ? (
         <video
           className="stage-reel"
+          data-cursor="none"
           src="/video/showreel.mp4"
           poster={POSTER}
           autoPlay
@@ -74,7 +80,12 @@ export function Showreel() {
             Play showreel
           </button>
 
-          <a href={BOOK_CALL_URL} className="call-card">
+          <a
+            href={BOOK_CALL_URL}
+            className="call-card"
+            data-cursor="link"
+            data-magnetic
+          >
             <span className="flex h-13 w-13 items-center justify-center rounded-[14px] bg-ink">
               <Image
                 src="/brand/vidiosa-mark-white.png"

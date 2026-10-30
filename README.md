@@ -57,6 +57,19 @@ gradient. Tokens live in [`src/app/globals.css`](src/app/globals.css).
     orange, then settle back. It sits still for people who prefer reduced
     motion.
 
+## Interactions
+
+All of these switch off for people who prefer reduced motion. Cursor and hover
+effects run only with a mouse or trackpad; phones keep the rest.
+
+| Effect | Where |
+|---|---|
+| Custom cursor: a dot, a ring over links, a "Play reel" bubble over the showreel | [`cursor.tsx`](src/components/cursor.tsx) |
+| Magnetic buttons (`data-magnetic`), header that hides on scroll down, gradient that follows the cursor | [`site-motion.tsx`](src/components/site-motion.tsx) |
+| Faint dot field behind the hero | [`hero-field.tsx`](src/components/hero-field.tsx) |
+| "What we make" strip that drifts and shows a clip on hover | [`marquee.tsx`](src/components/marquee.tsx), clips in `public/video/make/` |
+| Showreel that widens as it scrolls through, looping gradient on "Videos every week." | CSS in [`globals.css`](src/app/globals.css) |
+
 Contact details, the booking widget URL and the "Book a call" link live in
 [`src/lib/contact.ts`](src/lib/contact.ts).
 
@@ -66,6 +79,8 @@ Contact details, the booking widget URL and the "Book a call" link live in
 |---|---|
 | `public/brand/vidiosa-logo-black.png`, `-white.png` | Header logo (black wordmark, gradient play mark); the white one is unused for now |
 | `public/brand/vidiosa-mark-black.png`, `-white.png` | Strip separators, call card |
+| `public/brand/vidiosa-mark-gradient.png`, `vidiosa-wordmark-black.png` | Header logo, split so the mark can spin on hover |
+| `public/video/make/*.mp4` | Silent hover previews for the strip, about 600 KB in all, loaded on hover |
 | `public/video/showreel.mp4` | Full reel, 66 s, 1080p, about 14 MB |
 | `public/video/showreel-preview.mp4` | Silent 12 s loop, about 1.5 MB |
 | `public/video/showreel-poster.jpg` | Still shown before the videos load |
