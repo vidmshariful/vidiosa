@@ -1,9 +1,10 @@
 # Vidiosa
 
-Marketing site for Vidiosa — a video studio making animated explainers, product
-demos, and launch films for SaaS teams.
+Marketing site for Vidiosa, the video team for B2B SaaS.
 
-Currently serving a coming-soon home page.
+Currently serving an interim one-page home (header, hero with the showreel,
+"what we make" strip, footer call to action) while the full site is built in
+`vidiosa-web`.
 
 ## Stack
 
@@ -11,8 +12,8 @@ Currently serving a coming-soon home page.
 |---|---|
 | Framework | Next.js 16 (App Router, Turbopack) |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4 (`@theme` tokens in `src/app/globals.css`) |
-| Fonts | Archivo (display, variable width axis), Instrument Sans (body), DM Mono (timecode + labels) via `next/font` |
+| Styling | Tailwind CSS v4 (`@theme` tokens) plus page classes in `src/app/globals.css` |
+| Fonts | Inter Tight (headings) and Inter (body) via `next/font` |
 | Linting | ESLint (`eslint-config-next`) |
 
 ## Getting started
@@ -26,69 +27,51 @@ Other scripts: `npm run build`, `npm start`, `npm run lint`.
 
 ## Design system
 
-Tokens live in [`src/app/globals.css`](src/app/globals.css) under `@theme`, so
-every colour is available as a Tailwind utility (`bg-ink`, `text-flare`, …).
+This page follows the approved v4 direction: black, white and one orange
+gradient. Tokens live in [`src/app/globals.css`](src/app/globals.css).
 
 | Token | Value | Use |
 |---|---|---|
-| `ink` | `#0b0c0f` | Page background |
-| `panel` | `#14161b` | Raised surfaces |
-| `line` | `#23262e` | Hairlines, borders |
-| `paper` | `#edebe6` | Primary text |
-| `muted` | `#8b909b` | Secondary text |
-| `flare` | `#fe681c` | Brand accent, one use at a time |
-| `flare-lift` | `#ff7f3a` | Hover state for `flare` surfaces |
+| `ink` | `#0a0a0b` | Text, buttons, dark blocks |
+| `paper` | `#ffffff` | Page background |
+| `mist` | `#f3f3f1` | Soft fills (WhatsApp pill, button icons) |
+| `line` | `#e3e3df` | Hairlines |
+| `muted` | `#5e5e62` | Body text |
+| `--grad` | `#ff9a4d` to `#ff5a1f` to `#f23d0f` | Logo mark, button dots, the last headline line |
 
-`flare` is sampled directly from the play mark in the logo art, so the accent and
-the logo are the same orange. Re-sample if the logo is ever redrawn.
+## The page
 
-Three type roles are exposed as helper classes: `.display` (Archivo, set
-expanded via its `wdth` axis), `.label` (mono, uppercase, tracked out), and
-`.tc` (mono with tabular figures, for timecode).
+- **Hero:** two-line headline, subhead, "Book a call" and "Watch the showreel".
+- **Showreel:** [`src/components/showreel.tsx`](src/components/showreel.tsx).
+  A silent 12-second preview loops until someone presses play; then the full
+  reel plays with sound in the same frame. The hero's "Watch the showreel"
+  button ([`watch-button.tsx`](src/components/watch-button.tsx)) fires an event
+  the showreel listens for.
+- **Footer:** "Let's plan your first month." and the large wordmark.
 
-## The home page
+Contact details and the "Book a call" link live in
+[`src/lib/contact.ts`](src/lib/contact.ts). There is no booking calendar yet,
+so "Book a call" opens an email to hello@vidiosa.com; swap `BOOK_CALL_URL` when
+one exists.
 
-The page is built as a broadcast reference monitor. Vidiosa sells film by the
-second, so the signature element is a live 30-second timeline —
-[`src/components/timeline.tsx`](src/components/timeline.tsx) — whose playhead
-scrubs in real time at 24fps and loops. The scrub writes straight to the DOM
-rather than through React state, and it holds on a still frame when
-`prefers-reduced-motion` is set.
+## Assets
 
-The 6px strip across the top is a real SMPTE 75% colour-bar pattern.
-
-## Brand assets
-
-| File | Source | Used for |
-|---|---|---|
-| `public/vidiosa-logo.png` | `Vidiosa Logo_white_orange.png` | Header logo (300×100, white wordmark + orange mark, transparent) |
-| `src/app/icon.png` | `FavIcon Vidiosa.png` | Favicon (32×32) |
-| `src/app/apple-icon.png` | `WebClip.png` | Apple touch icon (256×256, white mark on orange) |
-
-All three are the live production assets pulled from vidiosa.com. Next.js picks
-up `icon.png` and `apple-icon.png` by filename — no metadata config needed.
-
-The logo art carries roughly 25% padding on the top and bottom, so the header
-sizes the box taller than the mark visually reads. The favicon is only 32×32
-(that is the largest version currently on the site); re-export it larger if a
-crisper tab icon matters.
+| File | Used for |
+|---|---|
+| `public/brand/vidiosa-logo-black.png`, `-white.png` | Header and footer logo (black wordmark, gradient play mark) |
+| `public/brand/vidiosa-mark-black.png`, `-white.png` | Strip separators, call card |
+| `public/video/showreel.mp4` | Full reel, 66 s, 1080p, about 14 MB |
+| `public/video/showreel-preview.mp4` | Silent 12 s loop, about 1.5 MB |
+| `public/video/showreel-poster.jpg` | Still shown before the videos load |
+| `src/app/icon.png`, `apple-icon.png` | Browser tab and home screen icons, cut from the mark |
 
 ## Routes and metadata
 
-- `/` — coming soon
-- `/opengraph-image` — social card generated at build time with `next/og`
+- `/`: interim home
+- `/opengraph-image`: social card generated with `next/og`
 - `/icon.png`, `/apple-icon.png`, `/robots.txt`, `/sitemap.xml`
 
-The canonical URL, sitemap host, and OG metadata are hard-coded to
+The canonical URL, sitemap host and OG metadata are set to
 `https://vidiosa.com` in [`src/app/layout.tsx`](src/app/layout.tsx),
-[`src/app/robots.ts`](src/app/robots.ts), and
-[`src/app/sitemap.ts`](src/app/sitemap.ts). Change them there if the domain
-moves.
-
-## Notes for the next pass
-
-- There is no email capture. The page routes people to `hello@vidiosa.com` and
-  the studio phone number instead. Add a form once an ESP is chosen — a capture
-  field that posts nowhere is worse than a mailto link.
-- Contact details are inlined in the page. Lift them into a shared constant when
-  a second page needs them.
+[`src/app/robots.ts`](src/app/robots.ts) and
+[`src/app/sitemap.ts`](src/app/sitemap.ts).

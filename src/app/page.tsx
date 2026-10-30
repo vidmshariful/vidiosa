@@ -1,27 +1,32 @@
 import Image from "next/image";
 
-import { ColorBars } from "@/components/color-bars";
-import { Timeline } from "@/components/timeline";
+import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
+import { Showreel } from "@/components/showreel";
+import { WatchButton } from "@/components/watch-button";
+import { BOOK_CALL_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/contact";
 
-const SERVICES = ["Animated explainers", "Product demos", "Launch films"];
+const MAKES = [
+  "Launch films",
+  "Product demos",
+  "Explainers",
+  "Founder clips",
+  "Onboarding videos",
+];
 
-function Brackets() {
-  const corner =
-    "pointer-events-none absolute h-7 w-7 border-paper/18 sm:h-9 sm:w-9";
+function MarqueeSet({ hidden = false }: { hidden?: boolean }) {
   return (
-    <div aria-hidden>
-      <span
-        className={`${corner} -top-6 -left-4 border-t border-l sm:-left-8`}
-      />
-      <span
-        className={`${corner} -top-6 -right-4 border-t border-r sm:-right-8`}
-      />
-      <span
-        className={`${corner} -bottom-6 -left-4 border-b border-l sm:-left-8`}
-      />
-      <span
-        className={`${corner} -right-4 -bottom-6 border-r border-b sm:-right-8`}
-      />
+    <div className="marquee-set" aria-hidden={hidden || undefined}>
+      {MAKES.map((item) => (
+        <span key={item} className="contents">
+          <span>{item}</span>
+          <Image
+            src="/brand/vidiosa-mark-black.png"
+            alt=""
+            width={109}
+            height={116}
+          />
+        </span>
+      ))}
     </div>
   );
 }
@@ -29,88 +34,112 @@ function Brackets() {
 export default function Home() {
   return (
     <>
-      <ColorBars />
+      <header className="hdr">
+        <div className="wrap flex min-h-20 items-center gap-3">
+          <a href="#top" aria-label="Vidiosa home">
+            {/* Source art is 578×120. */}
+            <Image
+              src="/brand/vidiosa-logo-black.png"
+              alt="Vidiosa"
+              width={578}
+              height={120}
+              priority
+              className="h-[30px] w-auto"
+            />
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            className="wa"
+            aria-label={`WhatsApp ${WHATSAPP_DISPLAY}`}
+          >
+            <WhatsAppIcon />
+            <span className="roll" data-t={WHATSAPP_DISPLAY}>
+              <span>{WHATSAPP_DISPLAY}</span>
+            </span>
+          </a>
+          <a href={BOOK_CALL_URL} className="btn btn-ink btn-sm">
+            <span className="roll" data-t="Book a call">
+              <span>Book a call</span>
+            </span>
+            <span className="btn-dot">
+              <ArrowIcon size={16} />
+            </span>
+          </a>
+        </div>
+      </header>
 
-      <div className="mx-auto flex w-full max-w-[1240px] flex-1 flex-col px-6 py-8 sm:px-10 sm:py-10 lg:px-14">
-        <header className="flex items-center justify-between gap-6">
-          {/* Source art carries ~25% padding top and bottom, so the box is
-              sized larger than the mark reads. */}
-          <Image
-            src="/vidiosa-logo.png"
-            alt="Vidiosa"
-            width={300}
-            height={100}
-            priority
-            className="h-11 w-auto sm:h-14"
-          />
-          <p className="label text-muted">SaaS video studio</p>
-        </header>
+      <main id="top">
+        <section className="pt-[clamp(40px,6vw,96px)]">
+          <div className="wrap">
+            <h1 className="h1">
+              <span className="line">
+                <span>One plan. A full video team.</span>
+              </span>
+              <span className="line">
+                <span className="grad-text">Videos every week.</span>
+              </span>
+            </h1>
 
-        {/* Vertical rhythm keys off viewport height so the frame fits a laptop
-            screen without scrolling, and breathes on taller displays. */}
-        <main className="flex flex-1 flex-col justify-center py-[clamp(3.5rem,7vh,6rem)]">
-          <section className="relative w-full">
-            <Brackets />
-
-            <div className="max-w-[54rem]">
-              {/* The status is the point of the page, so it gets a chip and a
-                  readable size rather than fine print. */}
-              <p className="label inline-flex items-center gap-3 border border-flare/35 bg-flare/10 px-4 py-2.5 text-[0.8125rem] text-flare sm:text-sm">
-                <span aria-hidden className="block h-2 w-2 bg-flare" />
-                Coming soon
+            <div className="fade-in mt-[clamp(32px,4vw,52px)] grid items-end gap-6 border-t border-line pt-[clamp(28px,3vw,40px)] lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-12">
+              <p className="max-w-[62ch] text-[clamp(17px,1.35vw,19px)] leading-[1.55] text-muted">
+                Get a full video team for one monthly plan: strategists,
+                scriptwriters, designers and motion artists. We plan your
+                product and founder videos from your roadmap, make them and ship
+                them. No hiring, no salaries, no managing. You just approve.
               </p>
-
-              <h1 className="display mt-6 text-[clamp(2.5rem,6.8vw,5.25rem)] text-paper">
-                SaaS videos that educate, engage, and convert.
-              </h1>
-
-              <p className="mt-7 max-w-[46ch] text-base leading-relaxed text-paper/70 sm:text-lg">
-                Vidiosa cuts animated explainers, product demos, and launch
-                films for SaaS teams. The new site is in the edit. The studio is
-                open — bring us a brief.
-              </p>
-
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-                <a
-                  href="mailto:hello@vidiosa.com?subject=Project%20brief"
-                  className="label inline-flex items-center justify-center bg-flare px-7 py-4 text-ink transition-colors hover:bg-flare-lift"
-                >
-                  Start a project
+              <div className="flex flex-wrap gap-2.5 lg:justify-end">
+                <a href={BOOK_CALL_URL} className="btn btn-ink">
+                  <span className="roll" data-t="Book a call">
+                    <span>Book a call</span>
+                  </span>
+                  <span className="btn-dot">
+                    <ArrowIcon />
+                  </span>
                 </a>
-                <a
-                  href="tel:+13072257167"
-                  className="label inline-flex items-center justify-center border border-line px-7 py-4 text-paper/80 transition-colors hover:border-paper/35 hover:text-paper"
-                >
-                  +1 307 225 7167
-                </a>
+                <WatchButton />
               </div>
             </div>
-          </section>
-        </main>
-
-        <Timeline />
-
-        <footer className="mt-[clamp(2rem,4.5vh,3.5rem)] flex flex-col gap-5 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <ul className="label flex flex-wrap items-center gap-x-3 gap-y-2 text-muted">
-            {SERVICES.map((service, i) => (
-              <li key={service} className="flex items-center gap-3">
-                {i > 0 && <span aria-hidden className="h-3 w-px bg-line" />}
-                {service}
-              </li>
-            ))}
-          </ul>
-          <div className="label flex flex-wrap items-center gap-x-3 gap-y-2 text-muted">
-            <a
-              href="mailto:hello@vidiosa.com"
-              className="text-paper/75 transition-colors hover:text-flare"
-            >
-              hello@vidiosa.com
-            </a>
-            <span aria-hidden className="h-3 w-px bg-line" />
-            <span>&copy; {new Date().getFullYear()} Vidiosa</span>
           </div>
-        </footer>
-      </div>
+        </section>
+
+        <Showreel />
+
+        <div className="marquee" aria-label="What we make">
+          <div className="marquee-track">
+            <MarqueeSet />
+            <MarqueeSet hidden />
+          </div>
+        </div>
+      </main>
+
+      <footer className="end">
+        <div className="mx-auto max-w-[1376px]">
+          <div className="reveal flex flex-col gap-7">
+            <span className="tag">Book a call</span>
+            <h2 className="end-h">
+              <a href={BOOK_CALL_URL}>
+                Let&apos;s plan your{" "}
+                <span className="grad-text">first month.</span>
+              </a>
+            </h2>
+          </div>
+          <div className="reveal mt-[clamp(64px,8vw,112px)] border-t border-white/12 pt-[clamp(28px,3vw,40px)]">
+            {/* Source art is 581×120. */}
+            <Image
+              src="/brand/vidiosa-logo-white.png"
+              alt="Vidiosa"
+              width={581}
+              height={120}
+              sizes="100vw"
+              className="h-auto w-full"
+            />
+          </div>
+          <div className="mt-6 flex flex-wrap justify-between gap-4 text-[13px] text-muted-dark">
+            <span>&copy; {new Date().getFullYear()} Vidiosa LLC</span>
+            <span>Human-directed, AI-accelerated.</span>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

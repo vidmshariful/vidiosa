@@ -1,44 +1,38 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, DM_Mono, Instrument_Sans } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  axes: ["wdth"],
+  weight: ["500", "600"],
   display: "swap",
 });
 
-const instrument = Instrument_Sans({
-  variable: "--font-instrument",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
 const siteUrl = "https://vidiosa.com";
+const title = "Vidiosa: your SaaS video team, every week";
 const description =
-  "Vidiosa makes animated explainers, product demos, and launch films for SaaS teams. The new site is in the edit — the studio is open.";
+  "One plan, a full video team. Vidiosa plans, makes and ships product and founder videos for SaaS teams every week. No hiring, no salaries, no managing.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Vidiosa — SaaS videos that educate, engage, and convert",
+    default: title,
     template: "%s · Vidiosa",
   },
   description,
   keywords: [
-    "SaaS video production",
-    "animated explainer video",
-    "product demo video",
-    "product launch video",
-    "video agency for SaaS",
+    "SaaS video production subscription",
+    "product videos for SaaS",
+    "SaaS explainer video",
+    "feature launch video",
+    "founder video content",
   ],
   authors: [{ name: "Vidiosa", url: siteUrl }],
   creator: "Vidiosa",
@@ -47,26 +41,26 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "Vidiosa",
-    title: "Vidiosa — SaaS videos that educate, engage, and convert",
+    title,
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vidiosa — SaaS videos that educate, engage, and convert",
+    title,
     description,
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0c0f",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${instrument.variable} ${dmMono.variable} h-full antialiased`}
+      className={`${interTight.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
     </html>

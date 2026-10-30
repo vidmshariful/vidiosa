@@ -1,84 +1,512 @@
 @import "tailwindcss";
 
 @theme {
-  /* Grading-suite palette: cool near-black, warm paper, one brand flare. */
-  --color-ink: #0b0c0f;
-  --color-panel: #14161b;
-  --color-line: #23262e;
-  --color-paper: #edebe6;
-  --color-muted: #8b909b;
-  /* Sampled straight from the play mark in the logo art. */
-  --color-flare: #fe681c;
-  --color-flare-lift: #ff7f3a;
+  /* Approved v4 palette: ink, white, one orange gradient. */
+  --color-ink: #0a0a0b;
+  --color-ink-lift: #232326;
+  --color-paper: #ffffff;
+  --color-mist: #f3f3f1;
+  --color-mist-deep: #e9e9e6;
+  --color-line: #e3e3df;
+  --color-muted: #5e5e62;
+  --color-muted-dark: #a1a1a6;
+  --color-orange: #ff5a1f;
 
-  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-dm-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-head: var(--font-inter-tight), "Helvetica Neue", Arial, sans-serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --grad: linear-gradient(135deg, #ff9a4d 0%, #ff5a1f 52%, #f23d0f 100%);
+  --ease: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --gutter: clamp(16px, 4vw, 32px);
+  --edge: clamp(8px, 1.2vw, 16px);
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-ink);
-  color: var(--color-paper);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-body);
-  /* Light bleeding off the colour-bar strip at the top of the monitor. */
-  background-image: radial-gradient(
-    120% 80% at 50% 0%,
-    rgba(254, 104, 28, 0.07),
-    transparent 62%
-  );
-  background-attachment: fixed;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
 ::selection {
-  background-color: var(--color-flare);
+  background-color: var(--color-orange);
   color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-flare);
+  outline: 2px solid var(--color-orange);
   outline-offset: 3px;
+  border-radius: 8px;
 }
 
-/* Archivo carries a width axis; the display sizes run expanded like a title card. */
-.display {
-  font-family: var(--font-display);
-  font-variation-settings: "wdth" 108;
-  font-weight: 600;
-  letter-spacing: -0.032em;
-  line-height: 0.92;
+.wrap {
+  max-width: 1376px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-.wordmark {
-  font-family: var(--font-display);
-  font-variation-settings: "wdth" 120;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
   font-weight: 500;
 }
 
-.tc {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+.tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-orange);
+}
+
+/* Labels roll up on hover: the copy in data-t slides in from below. */
+.roll {
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  line-height: 1.25;
+}
+
+.roll > span {
+  display: block;
+  transition: transform 0.5s var(--ease);
+}
+
+.roll::after {
+  content: attr(data-t);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  transition: transform 0.5s var(--ease);
+}
+
+a:hover .roll > span,
+a:hover .roll::after,
+button:hover .roll > span,
+button:hover .roll::after {
+  transform: translateY(-100%);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 6px 6px 6px 24px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.3s var(--ease-out),
+    border-color 0.3s;
+}
+
+.btn-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--grad);
+  color: var(--color-ink);
+  transition: transform 0.5s var(--ease);
+}
+
+.btn:hover .btn-dot {
+  transform: rotate(45deg);
+}
+
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn-ink:hover {
+  background: var(--color-ink-lift);
+}
+
+.btn-line {
+  padding: 6px 22px 6px 8px;
+  border-color: var(--color-line);
+  color: var(--color-ink);
+}
+
+.btn-line:hover {
+  border-color: var(--color-ink);
+}
+
+.btn-line .btn-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--color-mist);
+}
+
+.btn-sm {
+  min-height: 48px;
+  font-size: 15px;
+  padding-left: 20px;
+}
+
+.btn-sm .btn-dot {
+  width: 36px;
+  height: 36px;
+}
+
+/* Header */
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.wa {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 18px 0 14px;
+  border-radius: 999px;
+  background: var(--color-mist);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.wa:hover {
+  background: var(--color-mist-deep);
+}
+
+.wa svg {
+  color: #1fa855;
+  flex: none;
+}
+
+/* Hero */
+.h1 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(44px, 6.6vw, 98px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.07em;
+}
+
+.line > span {
+  display: block;
+  animation: rise 1.05s var(--ease) both;
+}
+
+.line:nth-child(2) > span {
+  animation-delay: 0.12s;
+}
+
+@media (min-width: 1001px) {
+  .h1 .line > span {
+    white-space: nowrap;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.fade-in {
+  animation: fade-up 1s var(--ease-out) 0.45s both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Showreel stage, a little wider than the text column */
+.stage {
+  position: relative;
+  margin: clamp(40px, 5vw, 64px) var(--edge) 0;
+  height: clamp(440px, 54vw, 800px);
+  border-radius: clamp(24px, 3vw, 40px);
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.stage-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1.6s var(--ease-out);
+}
+
+.stage:hover .stage-preview {
+  transform: scale(1.06);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 11, 0.25) 0%,
+    rgba(10, 10, 11, 0) 35%,
+    rgba(10, 10, 11, 0) 60%,
+    rgba(10, 10, 11, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.stage-reel {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.play-pill {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 30px 10px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--color-ink);
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.5s var(--ease);
+}
+
+.play-pill:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.play-pill-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: var(--grad);
+}
+
+.play-pill-dot::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 90, 31, 0.55);
+  animation: ring 2.2s var(--ease-out) infinite;
+}
+
+@keyframes ring {
+  from {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.call-card {
+  position: absolute;
+  right: clamp(16px, 2vw, 28px);
+  bottom: clamp(16px, 2vw, 28px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 18px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.call-card-go {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--grad);
+  transition: transform 0.5s var(--ease);
+}
+
+.call-card:hover .call-card-go {
+  transform: rotate(45deg);
+}
+
+/* What we make */
+.marquee {
+  overflow: hidden;
+  padding-block: clamp(28px, 3.4vw, 44px);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-set {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  padding-right: 36px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(32px, 4vw, 58px);
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.marquee-set img {
+  width: 0.62em;
+  height: auto;
+  flex: none;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Footer call to action */
+.end {
+  margin: 0 var(--edge) var(--edge);
+  padding: clamp(64px, 9vw, 128px) clamp(24px, 4vw, 64px) 28px;
+  border-radius: clamp(24px, 3vw, 40px);
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.end-h {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(48px, 7.6vw, 116px);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+/* Blocks fade up as they enter, where the browser supports scroll timelines. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(48px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .call-card,
+  .wa .roll {
+    display: none;
+  }
+
+  .wa {
+    padding: 0 14px;
+  }
+
+  .play-pill {
+    font-size: 15px;
+    padding-right: 22px;
+  }
+
+  .play-pill-dot {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
+    animation: none !important;
+    transition: none !important;
   }
 }

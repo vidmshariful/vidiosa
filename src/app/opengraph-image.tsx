@@ -1,18 +1,8 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Vidiosa — SaaS videos that educate, engage, and convert";
+export const alt = "Vidiosa: One plan. A full video team. Videos every week.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-
-const BARS = [
-  "#c0c0c0",
-  "#c0c000",
-  "#00c0c0",
-  "#00c000",
-  "#c000c0",
-  "#c00000",
-  "#0000c0",
-];
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -20,90 +10,64 @@ export default function OpengraphImage() {
       style={{
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
         width: "100%",
         height: "100%",
-        backgroundColor: "#0b0c0f",
+        padding: "64px 72px",
+        backgroundColor: "#0a0a0b",
+        color: "#ffffff",
       }}
     >
-      <div style={{ display: "flex", height: 10 }}>
-        {BARS.map((color) => (
-          <div key={color} style={{ flex: 1, backgroundColor: color }} />
-        ))}
+      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+        {/* The play mark, drawn so the card needs no image fetch. */}
+        <svg width="44" height="44" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#ff9a4d" />
+              <stop offset="0.52" stopColor="#ff5a1f" />
+              <stop offset="1" stopColor="#f23d0f" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M28 24 L28 76 Q28 88 38 82 L84 56 Q94 50 84 44 L38 18 Q28 12 28 24 Z"
+            fill="url(#g)"
+          />
+        </svg>
+        <span style={{ fontSize: 40, fontWeight: 600, letterSpacing: -1 }}>
+          vidiosa
+        </span>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span
+          style={{ fontSize: 86, lineHeight: 0.96, letterSpacing: -4, fontWeight: 600 }}
+        >
+          One plan. A full video team.
+        </span>
+        <span
+          style={{
+            fontSize: 86,
+            lineHeight: 0.96,
+            letterSpacing: -4,
+            fontWeight: 600,
+            color: "#ff5a1f",
+            marginTop: 8,
+          }}
+        >
+          Videos every week.
+        </span>
       </div>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          flex: 1,
           justifyContent: "space-between",
-          padding: "64px 72px",
+          color: "#a1a1a6",
+          fontSize: 24,
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            color: "#8b909b",
-            fontSize: 22,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-          }}
-        >
-          <span style={{ color: "#edebe6" }}>Vidiosa</span>
-          <span>SaaS video studio</span>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <span
-            style={{
-              color: "#fe681c",
-              fontSize: 22,
-              letterSpacing: 4,
-              textTransform: "uppercase",
-            }}
-          >
-            Coming soon
-          </span>
-          <span
-            style={{
-              color: "#edebe6",
-              fontSize: 78,
-              lineHeight: 1.04,
-              letterSpacing: -2,
-              marginTop: 26,
-              maxWidth: 940,
-            }}
-          >
-            SaaS videos that educate, engage, and convert.
-          </span>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              display: "flex",
-              height: 6,
-              width: "100%",
-              backgroundColor: "#14161b",
-            }}
-          >
-            <div style={{ width: "25%", backgroundColor: "#fe681c" }} />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: 16,
-              color: "#8b909b",
-              fontSize: 20,
-            }}
-          >
-            <span>00:00:07:12</span>
-            <span>hello@vidiosa.com</span>
-            <span>00:00:30:00</span>
-          </div>
-        </div>
+        <span>Product and founder videos for SaaS teams</span>
+        <span>vidiosa.com</span>
       </div>
     </div>,
     size,
