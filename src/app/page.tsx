@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { BookingCalendar } from "@/components/booking-calendar";
+import { DotWordmark } from "@/components/dot-wordmark";
 import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
 import { Showreel } from "@/components/showreel";
 import { WatchButton } from "@/components/watch-button";
@@ -117,22 +119,13 @@ export default function Home() {
           <div className="reveal flex flex-col gap-7">
             <span className="tag">Book a call</span>
             <h2 className="end-h">
-              <a href={BOOK_CALL_URL}>
-                Let&apos;s plan your{" "}
-                <span className="grad-text">first month.</span>
-              </a>
+              Let&apos;s plan your{" "}
+              <span className="grad-text">first month.</span>
             </h2>
           </div>
-          <div className="reveal mt-[clamp(64px,8vw,112px)] border-t border-white/12 pt-[clamp(28px,3vw,40px)]">
-            {/* Source art is 581×120. */}
-            <Image
-              src="/brand/vidiosa-logo-white.png"
-              alt="Vidiosa"
-              width={581}
-              height={120}
-              sizes="100vw"
-              className="h-auto w-full"
-            />
+          <BookingCalendar />
+          <div className="mt-[clamp(64px,8vw,112px)] border-t border-white/12 pt-[clamp(28px,3vw,40px)]">
+            <DotWordmark />
           </div>
           <div className="mt-6 flex flex-wrap justify-between gap-4 text-[13px] text-muted-dark">
             <span>&copy; {new Date().getFullYear()} Vidiosa LLC</span>

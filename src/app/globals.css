@@ -457,6 +457,45 @@ button:hover .roll::after {
   letter-spacing: -0.045em;
 }
 
+/* One line from tablet up; the size tracks the footer's width so it never overflows. */
+@media (min-width: 761px) {
+  .end-h {
+    font-size: min(8.1vw, 124px);
+    white-space: nowrap;
+  }
+}
+
+/* Booking calendar: the white widget sits on its own card inside the dark footer. */
+.booking {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(8px, 1.2vw, 16px);
+  border-radius: clamp(20px, 2.4vw, 32px);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  scroll-margin-top: 96px;
+}
+
+.booking iframe {
+  display: block;
+  width: 100%;
+  /* Placeholder until the embed script sets the real height. */
+  height: 720px;
+  border: 0;
+  overflow: hidden;
+}
+
+/* Dotted wordmark: the canvas fills the width; the script sets --ratio to fit the letters. */
+.dot-mark {
+  aspect-ratio: var(--ratio, 7.4);
+  font-family: var(--font-head);
+}
+
+.dot-mark canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* Blocks fade up as they enter, where the browser supports scroll timelines. */
 @supports (animation-timeline: view()) {
   .reveal {

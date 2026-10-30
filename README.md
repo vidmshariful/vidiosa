@@ -47,18 +47,24 @@ gradient. Tokens live in [`src/app/globals.css`](src/app/globals.css).
   reel plays with sound in the same frame. The hero's "Watch the showreel"
   button ([`watch-button.tsx`](src/components/watch-button.tsx)) fires an event
   the showreel listens for.
-- **Footer:** "Let's plan your first month." and the large wordmark.
+- **Footer:** "Let's plan your first month.", the booking calendar and the
+  dotted "vidiosa studio" wordmark.
+  - The calendar ([`booking-calendar.tsx`](src/components/booking-calendar.tsx))
+    is the GrowxCRM booking widget in an iframe; its embed script resizes the
+    frame to fit. Every "Book a call" link scrolls to it (`#book`).
+  - The wordmark ([`dot-wordmark.tsx`](src/components/dot-wordmark.tsx)) is a
+    canvas grid of small squares that swirl away from the cursor and turn
+    orange, then settle back. It sits still for people who prefer reduced
+    motion.
 
-Contact details and the "Book a call" link live in
-[`src/lib/contact.ts`](src/lib/contact.ts). There is no booking calendar yet,
-so "Book a call" opens an email to hello@vidiosa.com; swap `BOOK_CALL_URL` when
-one exists.
+Contact details, the booking widget URL and the "Book a call" link live in
+[`src/lib/contact.ts`](src/lib/contact.ts).
 
 ## Assets
 
 | File | Used for |
 |---|---|
-| `public/brand/vidiosa-logo-black.png`, `-white.png` | Header and footer logo (black wordmark, gradient play mark) |
+| `public/brand/vidiosa-logo-black.png`, `-white.png` | Header logo (black wordmark, gradient play mark); the white one is unused for now |
 | `public/brand/vidiosa-mark-black.png`, `-white.png` | Strip separators, call card |
 | `public/video/showreel.mp4` | Full reel, 66 s, 1080p, about 14 MB |
 | `public/video/showreel-preview.mp4` | Silent 12 s loop, about 1.5 MB |
