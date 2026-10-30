@@ -3,8 +3,9 @@ export const EMAIL = "hello@vidiosa.com";
 export const WHATSAPP_DISPLAY = "+1 307 225 7167";
 export const WHATSAPP_URL = "https://wa.me/13072257167";
 
-// Every "Book a call" link scrolls to the booking calendar in the footer.
-export const BOOK_CALL_URL = "#book";
+// Every "Book a call" link goes to the booking calendar in the home page footer.
+// On the home page itself this just scrolls; from other pages it opens home.
+export const BOOK_CALL_URL = "/#book";
 
 // GrowxCRM booking widget. The embed script resizes the iframe to fit the calendar.
 export const BOOKING_WIDGET_URL =

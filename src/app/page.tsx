@@ -1,61 +1,19 @@
-import Image from "next/image";
-
 import { BookingCalendar } from "@/components/booking-calendar";
 import { Cursor } from "@/components/cursor";
-import { DotWordmark } from "@/components/dot-wordmark";
+import { FooterBase } from "@/components/footer-base";
 import { HeroField } from "@/components/hero-field";
-import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
+import { ArrowIcon } from "@/components/icons";
 import { Marquee } from "@/components/marquee";
 import { Showreel } from "@/components/showreel";
+import { SiteHeader } from "@/components/site-header";
 import { SiteMotion } from "@/components/site-motion";
 import { WatchButton } from "@/components/watch-button";
-import { BOOK_CALL_URL, WHATSAPP_DISPLAY, WHATSAPP_URL } from "@/lib/contact";
+import { BOOK_CALL_URL } from "@/lib/contact";
 
 export default function Home() {
   return (
     <>
-      <header className="hdr">
-        <div className="wrap flex min-h-20 items-center gap-2 sm:gap-3">
-          <a href="#top" className="logo" aria-label="Vidiosa home">
-            {/* Cut from the 578×120 logo: mark 113×120, wordmark 445×120. */}
-            <Image
-              src="/brand/vidiosa-mark-gradient.png"
-              alt=""
-              width={113}
-              height={120}
-              priority
-              className="logo-mark"
-            />
-            <Image
-              src="/brand/vidiosa-wordmark-black.png"
-              alt="Vidiosa"
-              width={445}
-              height={120}
-              priority
-              className="logo-word"
-            />
-          </a>
-          <a
-            href={WHATSAPP_URL}
-            className="wa"
-            data-magnetic
-            aria-label={`WhatsApp ${WHATSAPP_DISPLAY}`}
-          >
-            <WhatsAppIcon />
-            <span className="roll" data-t={WHATSAPP_DISPLAY}>
-              <span>{WHATSAPP_DISPLAY}</span>
-            </span>
-          </a>
-          <a href={BOOK_CALL_URL} className="btn btn-ink btn-sm" data-magnetic>
-            <span className="roll" data-t="Book a call">
-              <span>Book a call</span>
-            </span>
-            <span className="btn-dot">
-              <ArrowIcon size={16} />
-            </span>
-          </a>
-        </div>
-      </header>
+      <SiteHeader logoHref="#top" cta={{ label: "Book a call", href: BOOK_CALL_URL }} />
 
       <main id="top">
         <section className="relative isolate pt-[clamp(40px,6vw,96px)]">
@@ -110,13 +68,7 @@ export default function Home() {
             </h2>
           </div>
           <BookingCalendar />
-          <div className="mt-[clamp(64px,8vw,112px)] border-t border-white/12 pt-[clamp(28px,3vw,40px)]">
-            <DotWordmark />
-          </div>
-          <div className="mt-6 flex flex-wrap justify-between gap-4 text-[13px] text-muted-dark">
-            <span>&copy; {new Date().getFullYear()} Vidiosa LLC</span>
-            <span>Human-directed, AI-accelerated.</span>
-          </div>
+          <FooterBase />
         </div>
       </footer>
 

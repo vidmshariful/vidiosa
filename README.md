@@ -86,9 +86,20 @@ Contact details, the booking widget URL and the "Book a call" link live in
 | `public/video/showreel-poster.jpg` | Still shown before the videos load |
 | `src/app/icon.png`, `apple-icon.png` | Browser tab and home screen icons, cut from the mark |
 
+## Careers
+
+- `/careers` lists open roles grouped by team; each role has its own page at
+  `/careers/<slug>`.
+- Roles live in [`src/content/careers.ts`](src/content/careers.ts): title,
+  team, a one-line summary and, once it exists, the role's HighLevel form
+  (`formUrl` plus `formId`). Without a form, Apply falls back to an email to
+  hello@vidiosa.com with the role in the subject line.
+- Add, remove or reorder roles there; the list, role pages and sitemap follow.
+
 ## Routes and metadata
 
 - `/`: interim home
+- `/careers`, `/careers/<slug>`: careers and role pages
 - `/opengraph-image`: social card generated with `next/og`
 - `/icon.png`, `/apple-icon.png`, `/robots.txt`, `/sitemap.xml`
 
