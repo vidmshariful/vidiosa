@@ -7,6 +7,10 @@ import { ArrowIcon, PlayIcon } from "@/components/icons";
 import { BOOK_CALL_URL, PLAY_REEL_EVENT } from "@/lib/contact";
 
 const POSTER = "/video/showreel-poster.jpg";
+// The full reel (1080p, 60s, 62MB) streams from the HighLevel media CDN.
+// The silent preview and poster are cut from 0:32 to 0:44 of it.
+const REEL_URL =
+  "https://assets.cdn.filesafe.space/oxtO8cPnDqrLsojlJrBT/media/6ae49c483ee2a25c8e07ee4c.mp4";
 
 export function Showreel() {
   const [playing, setPlaying] = useState(false);
@@ -59,7 +63,7 @@ export function Showreel() {
         <video
           className="stage-reel"
           data-cursor="none"
-          src="/video/showreel.mp4"
+          src={REEL_URL}
           poster={POSTER}
           autoPlay
           controls

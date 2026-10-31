@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { CareersBoard } from "@/components/careers-board";
 import { CareersEnd } from "@/components/careers-end";
 import { Cursor } from "@/components/cursor";
 import { HeroField } from "@/components/hero-field";
 import { ArrowIcon, PlayIcon } from "@/components/icons";
-import { RoleList } from "@/components/role-list";
 import { SiteHeader } from "@/components/site-header";
 import { SiteMotion } from "@/components/site-motion";
-import { ROLES, TEAMS } from "@/content/careers";
+import { ROLES } from "@/content/careers";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -17,11 +17,6 @@ export const metadata: Metadata = {
 };
 
 export default function Careers() {
-  const teams = TEAMS.map((team) => ({
-    team,
-    roles: ROLES.filter((role) => role.team === team),
-  })).filter((group) => group.roles.length > 0);
-
   return (
     <>
       <SiteHeader cta={{ label: "See open roles", href: "#roles" }} />
@@ -83,15 +78,7 @@ export default function Careers() {
             <span className="roles-count">{ROLES.length}</span>
           </div>
 
-          {teams.map(({ team, roles }) => (
-            <div key={team} className="team reveal">
-              <h3 className="team-h">
-                {team}
-                <span className="team-n">{roles.length}</span>
-              </h3>
-              <RoleList roles={roles} />
-            </div>
-          ))}
+          <CareersBoard />
         </section>
       </main>
 

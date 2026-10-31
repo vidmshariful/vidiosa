@@ -81,25 +81,27 @@ Contact details, the booking widget URL and the "Book a call" link live in
 | `public/brand/vidiosa-mark-black.png`, `-white.png` | Strip separators, call card |
 | `public/brand/vidiosa-mark-gradient.png`, `vidiosa-wordmark-black.png` | Header logo, split so the mark can spin on hover |
 | `public/video/make/*.mp4` | Silent hover previews for the strip, about 600 KB in all, loaded on hover |
-| `public/video/showreel.mp4` | Full reel, 66 s, 1080p, about 14 MB |
-| `public/video/showreel-preview.mp4` | Silent 12 s loop, about 1.5 MB |
-| `public/video/showreel-poster.jpg` | Still shown before the videos load |
+| Full reel | 60 s, 1080p, about 62 MB, streamed from the HighLevel media CDN (`REEL_URL` in [`showreel.tsx`](src/components/showreel.tsx)) |
+| `public/video/showreel-preview.mp4` | Silent 12 s loop cut from 0:32 to 0:44 of the reel, about 1.7 MB |
+| `public/video/showreel-poster.jpg` | Still shown before the videos load, the first frame of the preview |
 | `src/app/icon.png`, `apple-icon.png` | Browser tab and home screen icons, cut from the mark |
 
 ## Careers
 
-- `/careers` lists open roles grouped by team; each role has its own page at
-  `/careers/<slug>`.
+- `/careers` shows open roles as cards with team filters
+  ([`careers-board.tsx`](src/components/careers-board.tsx)). A card opens a
+  pop-up with the details and the application; `/careers?role=<slug>` opens
+  one directly (old `/careers/<slug>` links redirect there).
 - Roles live in [`src/content/careers.ts`](src/content/careers.ts): title,
-  team, a one-line summary and, once it exists, the role's HighLevel form
-  (`formUrl` plus `formId`). Without a form, Apply falls back to an email to
-  hello@vidiosa.com with the role in the subject line.
-- Add, remove or reorder roles there; the list, role pages and sitemap follow.
+  team, summary, the card's focus line, optional detail sections and, once it
+  exists, the role's HighLevel form (`formUrl` plus `formId`). Without a form,
+  Apply falls back to an email to hello@vidiosa.com with the role in the subject.
+- Card photos are `public/roles/<slug>.jpg`, 960×720, black and white.
 
 ## Routes and metadata
 
 - `/`: interim home
-- `/careers`, `/careers/<slug>`: careers and role pages
+- `/careers`: careers, with role pop-ups (`?role=<slug>`)
 - `/opengraph-image`: social card generated with `next/og`
 - `/icon.png`, `/apple-icon.png`, `/robots.txt`, `/sitemap.xml`
 
