@@ -759,8 +759,58 @@ button:hover .roll::after {
 }
 
 /* Careers: roles grouped by team (team name left, roles right on desktop). */
+/* Careers benefits: a dark panel of three numbered perks. */
+.perks {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: clamp(24px, 3vw, 40px);
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.perks-grid {
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+}
+
+@media (min-width: 900px) {
+  .perks-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.perks-grid li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.perk-n {
+  font-family: var(--font-head);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.perks-grid h3 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(20px, 1.7vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.perks-grid p {
+  color: var(--color-muted-dark);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
 .roles {
-  padding-top: clamp(72px, 9vw, 128px);
+  padding-top: clamp(56px, 7vw, 104px);
   scroll-margin-top: 24px;
 }
 
@@ -807,6 +857,12 @@ button:hover .roll::after {
   font-weight: 500;
 }
 
+.role-chips .role-chip-pay {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-variant-numeric: tabular-nums;
+}
+
 /* Team filters */
 .job-filters {
   display: flex;
@@ -849,7 +905,7 @@ button:hover .roll::after {
   color: var(--color-muted-dark);
 }
 
-/* Role cards: inset photo, title, summary, focus line, footer with arrow. */
+/* Role cards: inset photo, title, experience, summary, salary, footer with arrow. */
 .job-grid {
   display: grid;
   gap: clamp(14px, 1.6vw, 24px);
@@ -940,11 +996,18 @@ button:hover .roll::after {
   line-height: 1.55;
 }
 
-.job-focus {
+.job-exp {
+  margin-top: -4px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.job-pay {
   margin-top: auto;
   padding-top: 6px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .job-foot {
@@ -1004,8 +1067,8 @@ button:hover .roll::after {
 
 .modal-panel {
   position: relative;
-  width: min(760px, 100%);
-  max-height: min(92svh, 100%);
+  width: min(1040px, 100%);
+  max-height: min(94svh, 100%);
   overflow-y: auto;
   overscroll-behavior: contain;
   border-radius: clamp(20px, 2.4vw, 32px);
@@ -1073,7 +1136,9 @@ button:hover .roll::after {
 
 .modal-img {
   position: relative;
-  aspect-ratio: 16 / 7;
+  /* A height cap here would shrink the width too, so the wide pop-up uses a
+     flatter ratio instead. */
+  aspect-ratio: 16 / 6;
   margin: 10px 10px 0;
   border-radius: clamp(14px, 1.8vw, 24px);
   overflow: hidden;
@@ -1102,6 +1167,7 @@ button:hover .roll::after {
 }
 
 .modal-lead {
+  max-width: 72ch;
   color: var(--color-muted);
   font-size: clamp(17px, 1.4vw, 19px);
   line-height: 1.6;
@@ -1140,8 +1206,80 @@ button:hover .roll::after {
   color: var(--color-orange);
 }
 
-.modal-apply {
-  scroll-margin-top: 12px;
+/* Apply view: a short header above the form, clear of the close button. */
+.modal-body-apply {
+  gap: 14px;
+  padding-top: clamp(20px, 2.6vw, 32px);
+}
+
+.modal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 56px;
+  padding: 8px 14px 8px 10px;
+  border-radius: 999px;
+  background: var(--color-mist);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease);
+}
+
+.modal-back:hover {
+  background: var(--color-line);
+}
+
+.modal-h-sm {
+  font-size: clamp(28px, 3.2vw, 44px);
+}
+
+.modal-body-apply .modal-apply {
+  padding-top: 0;
+  border-top: 0;
+}
+
+@media (max-width: 640px) {
+  /* Room for the form on a phone; the form repeats these details. */
+  .modal-body-apply .role-chips,
+  .modal-body-apply .tag {
+    display: none;
+  }
+}
+
+/* Closing call to action at the end of the role details. */
+.modal-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  width: 100%;
+  margin-top: 6px;
+  padding: clamp(18px, 2.4vw, 28px);
+  border-radius: clamp(16px, 2vw, 24px);
+  background: var(--color-mist);
+}
+
+.modal-cta-h {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(20px, 1.8vw, 24px);
+  letter-spacing: -0.02em;
+}
+
+/* Duties and requirements side by side once the pop-up is wide enough. */
+.modal-cols {
+  display: grid;
+  gap: 18px;
+  width: 100%;
+}
+
+@media (min-width: 720px) {
+  .modal-cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1153,6 +1291,10 @@ button:hover .roll::after {
   .modal-panel {
     max-height: 92svh;
     border-radius: 24px 24px 0 0;
+  }
+
+  .modal-img {
+    aspect-ratio: 16 / 8;
   }
 
   @keyframes modal-in {
@@ -1180,18 +1322,48 @@ button:hover .roll::after {
   width: 100%;
   /* Placeholder until the embed script sets the real height. */
   height: 760px;
+  /* The embed shrinks the frame while the form loads; keep the space. */
+  min-height: 640px;
   border: 0;
-  overflow: hidden;
 }
 
-.apply-card-email {
+/* While the embed loads it hides the frame; hold the space and say so. */
+.apply-card-form {
+  position: relative;
+  min-height: 660px;
+}
+
+.apply-card-form:has(iframe[style*="hidden"])::before {
+  content: "Loading the application form...";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-muted);
+  font-size: 15px;
+}
+
+.apply-card-soon {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
-  padding: clamp(24px, 3vw, 44px);
+  gap: 10px;
+  padding: clamp(22px, 3vw, 36px);
   background: var(--color-mist);
   border-color: transparent;
+}
+
+.apply-note {
+  margin-top: 12px;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.apply-note a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* Blocks fade up as they enter, where the browser supports scroll timelines. */

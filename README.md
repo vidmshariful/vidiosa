@@ -91,11 +91,14 @@ Contact details, the booking widget URL and the "Book a call" link live in
 - `/careers` shows open roles as cards with team filters
   ([`careers-board.tsx`](src/components/careers-board.tsx)). A card opens a
   pop-up with the details and the application; `/careers?role=<slug>` opens
-  one directly (old `/careers/<slug>` links redirect there).
+  one directly (old `/careers/<slug>` links redirect there, and slugs from the
+  first version of the page map to the role that replaced them).
 - Roles live in [`src/content/careers.ts`](src/content/careers.ts): title,
-  team, summary, the card's focus line, optional detail sections and, once it
-  exists, the role's HighLevel form (`formUrl` plus `formId`). Without a form,
-  Apply falls back to an email to hello@vidiosa.com with the role in the subject.
+  team, experience, salary, the card summary, the pop-up paragraph, duties,
+  requirements and the role's HighLevel form id (`formId`). The pop-up shows
+  the role first; "Apply now" swaps in the embedded form, with a way back. A
+  role without a form shows "Applications open soon" and no apply button.
+  The benefits (`PERKS`) show on the page and in every pop-up.
 - Card photos are `public/roles/<slug>.jpg`, 960×720, black and white.
 
 ## Routes and metadata

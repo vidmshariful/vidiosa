@@ -1,45 +1,54 @@
 import Script from "next/script";
 
-import { ArrowIcon } from "@/components/icons";
-import { applyByEmailUrl, type Role } from "@/content/careers";
-import { BOOKING_EMBED_SCRIPT, EMAIL } from "@/lib/contact";
+import { roleFormUrl, type Role } from "@/content/careers";
+import { BOOKING_EMBED_SCRIPT } from "@/lib/contact";
 
-// The role's HighLevel form when it has one; otherwise a clear email fallback so
-// people can apply from day one.
+// The role's HighLevel form, embedded inline. Roles without a form yet say so.
 export function ApplyForm({ role }: { role: Role }) {
-  if (role.formUrl) {
+  const formUrl = roleFormUrl(role);
+
+  if (!formUrl) {
     return (
-      <div className="apply-card">
-        <iframe
-          // The embed script resizes HighLevel iframes; it keys off this id.
-          id={role.formId}
-          src={role.formUrl}
-          title={`Apply for ${role.title}`}
-          scrolling="no"
-        />
-        {/* Same GrowxCRM script as the booking calendar; it loads once per page. */}
-        <Script src={BOOKING_EMBED_SCRIPT} strategy="afterInteractive" />
+      <div className="apply-card apply-card-soon">
+        <p className="text-[clamp(18px,1.6vw,22px)] font-medium leading-snug">
+          Applications for this role open soon.
+        </p>
+        <p className="text-sm text-muted">
+          The application form will appear here once it&apos;s ready.
+        </p>
       </div>
     );
   }
 
+  const iframeId = `inline-${role.formId}`;
+
   return (
-    <div className="apply-card apply-card-email">
-      <p className="text-[clamp(18px,1.6vw,22px)] font-medium leading-snug">
-        Send your CV and portfolio or reel, with a few lines about you and why
-        this role fits.
+    <>
+      <div className="apply-card apply-card-form">
+        <iframe
+          // HighLevel's embed script sizes the form to its content using these.
+          id={iframeId}
+          src={formUrl}
+          title={`Apply for ${role.title}`}
+          data-layout="{'id':'INLINE'}"
+          data-trigger-type="alwaysShow"
+          data-activation-type="alwaysActivated"
+          data-deactivation-type="neverDeactivate"
+          data-form-name={role.title}
+          data-layout-iframe-id={iframeId}
+          data-form-id={role.formId}
+        />
+        {/* Same GrowxCRM script as the booking calendar; it loads once per page. */}
+        <Script src={BOOKING_EMBED_SCRIPT} strategy="afterInteractive" />
+      </div>
+      <p className="apply-note">
+        We review every application personally and will contact shortlisted
+        candidates. Form not loading?{" "}
+        <a href={formUrl} target="_blank" rel="noopener">
+          Open it in a new tab
+        </a>
+        .
       </p>
-      <a href={applyByEmailUrl(role)} className="btn btn-ink" data-magnetic>
-        <span className="roll" data-t="Apply by email">
-          <span>Apply by email</span>
-        </span>
-        <span className="btn-dot">
-          <ArrowIcon />
-        </span>
-      </a>
-      <p className="text-sm text-muted">
-        Goes to {EMAIL}, with the role in the subject line.
-      </p>
-    </div>
+    </>
   );
 }
