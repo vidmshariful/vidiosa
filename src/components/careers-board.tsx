@@ -170,9 +170,9 @@ export function CareersBoard() {
               </span>
               <span className="job-foot">
                 <span>
-                  {r.formId ? "View role and apply" : "View role"}
+                  {r.surveyId ? "View role and apply" : "View role"}
                   <span className="job-loc">
-                    {r.formId ? `${EMPLOYMENT} · ${LOCATION}` : "Applications open soon"}
+                    {r.surveyId ? `${EMPLOYMENT} · ${LOCATION}` : "Applications open soon"}
                   </span>
                 </span>
                 <span className="job-go" aria-hidden>
@@ -208,7 +208,7 @@ export function CareersBoard() {
               <CloseIcon />
             </button>
 
-            {view === "apply" && role.formId ? (
+            {view === "apply" && role.surveyId ? (
               <div className="modal-body modal-body-apply">
                 <button type="button" className="modal-back" onClick={() => showView("details")}>
                   <ArrowIcon size={16} className="rotate-180" />
@@ -247,7 +247,7 @@ export function CareersBoard() {
                       <li>{EMPLOYMENT}</li>
                       <li>{LOCATION}</li>
                     </ul>
-                    {role.formId && applyButton}
+                    {role.surveyId && applyButton}
                   </div>
 
                   <p className="modal-lead">{role.about}</p>
@@ -281,7 +281,7 @@ export function CareersBoard() {
                   </div>
 
                   <div className="modal-cta">
-                    {role.formId ? (
+                    {role.surveyId ? (
                       <>
                         <div className="flex flex-col gap-1">
                           <p className="modal-cta-h">Sounds like you?</p>

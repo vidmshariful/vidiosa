@@ -27,12 +27,12 @@ export default function Careers() {
           <div className="wrap">
             <h1 className="h1">
               <span className="line">
-                <span>Join the team behind</span>
+                <span>Join the best SaaS</span>
               </span>
               <span className="line">
                 {/* Inner span: the outer one runs the rise animation. */}
                 <span>
-                  <span className="grad-text grad-flow">videos every week.</span>
+                  <span className="grad-text grad-flow">video team in Bangladesh.</span>
                 </span>
               </span>
             </h1>

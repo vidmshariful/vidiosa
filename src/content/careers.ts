@@ -2,8 +2,8 @@
 // the details and the application. /careers?role=<slug> opens one directly.
 //
 // - `summary`: the short line on the card. `about`: the paragraph in the pop-up.
-// - `formId`: the role's HighLevel form id (from
-//   https://link.growxcrm.com/widget/form/<id>). Without one the role shows
+// - `surveyId`: the role's HighLevel survey id (from
+//   https://link.growxcrm.com/widget/survey/<id>). Without one the role shows
 //   "Applications open soon".
 // - The card photo is public/roles/<slug>.jpg (960×720, black and white).
 
@@ -26,7 +26,7 @@ export type Role = {
   about: string;
   duties: string[];
   requirements: string[];
-  formId?: string;
+  surveyId?: string;
 };
 
 export const EMPLOYMENT = "Full-time";
@@ -83,7 +83,7 @@ export const ROLES: Role[] = [
       "Experience leading a creative team",
       "Fluent English for presenting to clients",
     ],
-    formId: "3SNI6Er6yEq6D2j3GDFS",
+    surveyId: "Z2s1SuqTSAvxyo1B9gts",
   },
   {
     slug: "junior-motion-designer",
@@ -107,6 +107,7 @@ export const ROLES: Role[] = [
       "A good understanding of timing, easing and basic animation principles",
       "A portfolio or reel of your motion work",
     ],
+    surveyId: "C6crIkC7yeCmfM8ffMXO",
   },
   {
     slug: "motion-designer",
@@ -130,7 +131,7 @@ export const ROLES: Role[] = [
       "A good sense of timing, easing and visual storytelling",
       "A reel or portfolio of your motion work",
     ],
-    formId: "wm6AIxNo1bTUbPINOxyW",
+    surveyId: "KVlvh1p3e7mhNyGqUo44",
   },
   {
     slug: "senior-motion-designer",
@@ -154,6 +155,7 @@ export const ROLES: Role[] = [
       "A strong reel of motion work you led or animated",
       "Experience reviewing or guiding other motion designers",
     ],
+    surveyId: "Uzgqjny2fEfMaj92L8qq",
   },
   {
     slug: "junior-designer",
@@ -177,6 +179,7 @@ export const ROLES: Role[] = [
       "A good eye for layout, colour and typography",
       "A design portfolio",
     ],
+    surveyId: "7DKJGrcHAptaQG5nyfbW",
   },
   {
     slug: "designer",
@@ -201,7 +204,7 @@ export const ROLES: Role[] = [
       "Strong layout, colour and typography",
       "A portfolio of your design work",
     ],
-    formId: "Q2tbfs7UzK6AL4GxdCnA",
+    surveyId: "DOYLZ81KwX3rXJQ3bGXH",
   },
   {
     slug: "senior-designer",
@@ -225,6 +228,7 @@ export const ROLES: Role[] = [
       "A portfolio that shows strong visual direction",
       "Experience reviewing or guiding other designers",
     ],
+    surveyId: "soENIuSMbuamAIANq9Bh",
   },
   {
     slug: "junior-video-editor",
@@ -248,6 +252,7 @@ export const ROLES: Role[] = [
       "A good sense of pacing and rhythm",
       "Samples of your editing work",
     ],
+    surveyId: "U6wLe7gliBEdxuJNiOwq",
   },
   {
     slug: "video-editor",
@@ -272,6 +277,7 @@ export const ROLES: Role[] = [
       "A good sense of story, pacing and sound",
       "A reel or portfolio of your edits",
     ],
+    surveyId: "39qts2nGimaxsmkRHBZl",
   },
   {
     slug: "senior-video-editor",
@@ -296,6 +302,7 @@ export const ROLES: Role[] = [
       "A reel of high-quality edits",
       "Experience reviewing or guiding other editors",
     ],
+    surveyId: "EJJLiAv3AHFqVpXNh0of",
   },
   {
     slug: "social-media-manager",
@@ -320,7 +327,7 @@ export const ROLES: Role[] = [
       "A good understanding of how each platform works: formats, trends and what performs",
       "Examples of accounts or content you've managed",
     ],
-    formId: "5tOODQQlUhkhO2mh85Ul",
+    surveyId: "cHyFOhPiZUJPVfmZEevj",
   },
   {
     slug: "marketing-associate",
@@ -345,6 +352,7 @@ export const ROLES: Role[] = [
       "A basic understanding of digital marketing: social media, email and ads",
       "Comfortable working with numbers and simple reports",
     ],
+    surveyId: "RfHvs5nlgs5v8RYhnqa9",
   },
   {
     slug: "head-of-marketing",
@@ -369,6 +377,7 @@ export const ROLES: Role[] = [
       "Fluent written and spoken English",
       "A good understanding of B2B or SaaS marketing",
     ],
+    surveyId: "pRbczLkfNWgTlDF9xlOv",
   },
   {
     slug: "client-success-manager",
@@ -393,6 +402,7 @@ export const ROLES: Role[] = [
       "Organised, with strong attention to detail",
       "Calm and professional with clients",
     ],
+    surveyId: "EgLjGZkR56s7nvUVbMgq",
   },
   {
     slug: "sales-representative",
@@ -417,6 +427,7 @@ export const ROLES: Role[] = [
       "Confident on calls with international clients",
       "Organised and consistent with follow-ups",
     ],
+    surveyId: "qflxM3BCsChiArDewcBf",
   },
   {
     slug: "project-manager",
@@ -441,7 +452,7 @@ export const ROLES: Role[] = [
       "Experience with a project management tool such as ClickUp, Asana or Trello",
       "Able to manage several projects at once",
     ],
-    formId: "TZKKtRv2gMwjYdBbkOKS",
+    surveyId: "Rz3Ww2Dw6jHn1n30MvYY",
   },
   {
     slug: "hr",
@@ -466,7 +477,7 @@ export const ROLES: Role[] = [
       "Good written English and Bangla",
       "Discreet with confidential information",
     ],
-    formId: "OrhyaeJpEcDTQGlDPvvr",
+    surveyId: "bGMSmJN55RVCNQu9oOp0",
   },
 ];
 
@@ -484,5 +495,6 @@ export const getRole = (slug: string) =>
 
 export const roleImage = (role: Role) => `/roles/${role.slug}.jpg`;
 
-export const roleFormUrl = (role: Role) =>
-  role.formId && `https://link.growxcrm.com/widget/form/${role.formId}?src=website`;
+export const roleSurveyUrl = (role: Role) =>
+  role.surveyId &&
+  `https://link.growxcrm.com/widget/survey/${role.surveyId}?src=website`;

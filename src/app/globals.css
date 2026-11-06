@@ -1240,10 +1240,20 @@ button:hover .roll::after {
 }
 
 @media (max-width: 640px) {
-  /* Room for the form on a phone; the form repeats these details. */
+  /* Room for the survey on a phone; the role details are one tap back. */
   .modal-body-apply .role-chips,
   .modal-body-apply .tag {
     display: none;
+  }
+
+  /* Edge to edge on phones: the survey's two-column answers need the width. */
+  .modal-body-apply .apply-card-form {
+    --bleed: clamp(20px, 3.4vw, 40px);
+    width: calc(100% + 2 * var(--bleed));
+    margin-inline: calc(-1 * var(--bleed));
+    padding: 0;
+    border: 0;
+    border-radius: 0;
   }
 }
 

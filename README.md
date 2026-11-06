@@ -95,9 +95,9 @@ Contact details, the booking widget URL and the "Book a call" link live in
   first version of the page map to the role that replaced them).
 - Roles live in [`src/content/careers.ts`](src/content/careers.ts): title,
   team, experience, salary, the card summary, the pop-up paragraph, duties,
-  requirements and the role's HighLevel form id (`formId`). The pop-up shows
-  the role first; "Apply now" swaps in the embedded form, with a way back. A
-  role without a form shows "Applications open soon" and no apply button.
+  requirements and the role's HighLevel survey id (`surveyId`). The pop-up shows
+  the role first; "Apply now" swaps in the embedded survey, with a way back. A
+  role without a survey shows "Applications open soon" and no apply button.
   The benefits (`PERKS`) show on the page and in every pop-up.
 - Card photos are `public/roles/<slug>.jpg`, 960×720, black and white.
 
